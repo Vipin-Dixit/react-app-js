@@ -5,11 +5,41 @@ import TabButton from "./components/TabButton";
 import { Component, useState } from "react";
 
 function App() {
-  const [selectedTopic, setSelectedTopic] = useState("components");
+  const [selectedTopic, setSelectedTopic] = useState();
   function handleClick(selectedButton) {
     setSelectedTopic(selectedButton);
     console.log(selectedTopic);
   }
+  let tabContent = "Please select a topic.";
+  if (selectedTopic) {
+    tabContent = (
+      <div id="tab-content">
+        <h3>
+          {selectedTopic
+            ? EXAMPLES[selectedTopic].title
+            : `plesase select a
+      topic`}
+        </h3>
+        <p>
+          {selectedTopic
+            ? EXAMPLES[selectedTopic].description
+            : `plesase
+      select a topic`}
+        </p>
+        <pre>
+          <code>
+            {selectedTopic
+              ? EXAMPLES[selectedTopic].code
+              : `plesase select a
+        topic`}
+          </code>
+        </pre>
+      </div>
+    );
+  }
+  /*   const coreConceptData = CORE_CONCEPTS.map((element) => {
+    return <CoreConcepts {...element} />;
+  }); */
   return (
     <div>
       <Header />
@@ -17,30 +47,9 @@ function App() {
         <section id="core-concepts">
           <h2>Core Concepts</h2>
           <ul>
-            <CoreConcepts
-              alt={CORE_CONCEPTS[0].description}
-              description={CORE_CONCEPTS[0].description}
-              src={CORE_CONCEPTS[0].image}
-              title={CORE_CONCEPTS[0].title}
-            />
-            <CoreConcepts
-              alt={CORE_CONCEPTS[1].description}
-              description={CORE_CONCEPTS[1].description}
-              src={CORE_CONCEPTS[1].image}
-              title={CORE_CONCEPTS[1].title}
-            />
-            <CoreConcepts
-              alt={CORE_CONCEPTS[2].description}
-              description={CORE_CONCEPTS[2].description}
-              src={CORE_CONCEPTS[2].image}
-              title={CORE_CONCEPTS[2].title}
-            />
-            <CoreConcepts
-              alt={CORE_CONCEPTS[3].description}
-              description={CORE_CONCEPTS[3].description}
-              src={CORE_CONCEPTS[3].image}
-              title={CORE_CONCEPTS[3].title}
-            />
+            {CORE_CONCEPTS.map((element) => (
+              <CoreConcepts key={element.title} {...element} />
+            ))}
           </ul>
         </section>
         <h2>Time to get started!</h2>
@@ -48,6 +57,7 @@ function App() {
           <h2>Examples</h2>
           <menu>
             <TabButton
+              isSelected={selectedTopic === "components"}
               onClick={() => {
                 handleClick("components");
               }}
@@ -55,6 +65,7 @@ function App() {
               Components
             </TabButton>
             <TabButton
+              isSelected={selectedTopic === "jsx"}
               onClick={() => {
                 handleClick("jsx");
               }}
@@ -62,6 +73,7 @@ function App() {
               JSX
             </TabButton>
             <TabButton
+              isSelected={selectedTopic === "props"}
               onClick={() => {
                 handleClick("props");
               }}
@@ -69,6 +81,7 @@ function App() {
               Props
             </TabButton>
             <TabButton
+              isSelected={selectedTopic === "state"}
               onClick={() => {
                 handleClick("state");
               }}
@@ -76,13 +89,7 @@ function App() {
               State
             </TabButton>
           </menu>
-          <div id="tab-content">
-            <h3>{EXAMPLES[selectedTopic].title}</h3>
-            <p>{EXAMPLES[selectedTopic].description}</p>
-            <pre>
-              <code>{EXAMPLES[selectedTopic].code}</code>
-            </pre>
-          </div>
+          {tabContent}
         </section>
       </main>
     </div>
