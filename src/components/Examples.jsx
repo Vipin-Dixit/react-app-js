@@ -2,6 +2,7 @@ import { EXAMPLES } from "../data";
 import Section from "./Section";
 import TabButton from "./TabButton";
 import { useState } from "react";
+import Tabs from "./Tabs";
 
 export default function Examples() {
   const [selectedTopic, setSelectedTopic] = useState();
@@ -39,40 +40,45 @@ export default function Examples() {
   }
   return (
     <Section title="Examples" id="examples">
-      <menu>
-        <TabButton
-          isSelected={selectedTopic === "components"}
-          onClick={() => {
-            handleClick("components");
-          }}
-        >
-          Components
-        </TabButton>
-        <TabButton
-          isSelected={selectedTopic === "jsx"}
-          onClick={() => {
-            handleClick("jsx");
-          }}
-        >
-          JSX
-        </TabButton>
-        <TabButton
-          isSelected={selectedTopic === "props"}
-          onClick={() => {
-            handleClick("props");
-          }}
-        >
-          Props
-        </TabButton>
-        <TabButton
-          isSelected={selectedTopic === "state"}
-          onClick={() => {
-            handleClick("state");
-          }}
-        >
-          State
-        </TabButton>
-      </menu>
+      <Tabs
+        buttons={
+          <>
+            <TabButton
+              isSelected={selectedTopic === "components"}
+              onClick={() => {
+                handleClick("components");
+              }}
+            >
+              Components
+            </TabButton>
+            <TabButton
+              isSelected={selectedTopic === "jsx"}
+              onClick={() => {
+                handleClick("jsx");
+              }}
+            >
+              JSX
+            </TabButton>
+            <TabButton
+              isSelected={selectedTopic === "props"}
+              onClick={() => {
+                handleClick("props");
+              }}
+            >
+              Props
+            </TabButton>
+            <TabButton
+              isSelected={selectedTopic === "state"}
+              onClick={() => {
+                handleClick("state");
+              }}
+            >
+              State
+            </TabButton>
+          </>
+        }
+      ></Tabs>
+
       {tabContent}
     </Section>
   );
